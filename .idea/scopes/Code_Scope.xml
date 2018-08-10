@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Code Scope" pattern="src[Wikdget_main]:tbsc.wikdget..*" />
+</component>

@@ -9,6 +9,7 @@ out/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/usage.statistics.xml
+.idea/**/kotlinc.xml
 
 .idea/**/uiDesigner.xml
 .idea/**/dynamic.xml
