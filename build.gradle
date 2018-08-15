@@ -12,6 +12,8 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "no.tornado:tornadofx:1.7.16"
+    compile 'com.sleepycat:je:5.0.73'
+    compile files("lib/dkpro-jwktl.jar")
 }
 
 compileKotlin {
