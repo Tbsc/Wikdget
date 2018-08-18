@@ -44,12 +44,6 @@ object Log {
     fun e(text: String, newline: Boolean = true) = log("E", text)
 
     /**
-     * Verbose level log message
-     * Printed only when enabled.
-     */
-    fun v(text: String, newline: Boolean = true) = log("V", text)
-
-    /**
      * Something has happened that prevents the program from continuing any further.
      * Typically this should only be called once in a program's execution, but nothing will
      * prevent you from doing so.
@@ -58,10 +52,16 @@ object Log {
     fun f(text: String, newline: Boolean = true) = log("F", text)
 
     /**
+     * Verbose level log message
+     * Printed only when enabled.
+     */
+    fun v(text: String, newline: Boolean = true) = if (WikdgetArgs.instance.verbose) log("V", text) else {}
+
+    /**
      * Used for debugging the program.
      * Printed only when enabled.
      */
-    fun d(text: String, newline: Boolean = true) = log("D", text)
+    fun d(text: String, newline: Boolean = true) = if (WikdgetArgs.instance.debug) log("D", text) else {}
 
     private val threadName: String
         get() = Thread.currentThread().name
@@ -70,7 +70,7 @@ object Log {
      * Prints in the format of [date-da-te--ti:m:e] [log-level] message
      */
     fun log(tag: String, text: String, newline: Boolean = true) {
-        println("[${LocalDateTime.now().format(DateTimeFormatter
+        print("[${LocalDateTime.now().format(DateTimeFormatter
                 .ofPattern("uuuu-MM-dd-HH:mm:ss"))}] [$tag/$threadName] $text ${if (newline) "\n" else ""}")
     }
 }

@@ -17,6 +17,8 @@
 
 package tbsc.wikdget
 
+import com.xenomachina.argparser.ArgParser
+import com.xenomachina.argparser.default
 import tbsc.wikdget.ui.StartView
 import tornadofx.*
 
@@ -29,5 +31,28 @@ class WikdgetApp : App(StartView::class)
 
 fun main(args: Array<String>) {
     Log.i("Starting Wikdget")
+
+    // Parse arguments
+    WikdgetArgs.instance = ArgParser(args).parseInto(::WikdgetArgs)
+
     launch<WikdgetApp>(args)
+}
+
+class WikdgetArgs(parser: ArgParser) {
+    val databasePath: String by parser
+            .storing("--db", "--database",
+                    help = "path to JWKTL database")
+            .default("./jwktl-dump")
+
+    val verbose: Boolean by parser
+            .flagging("-v", "--verbose",
+                    help = "enable verbose logging")
+
+    val debug: Boolean by parser
+            .flagging("-d", "--debug",
+                    help = "enable debug logging")
+
+    companion object {
+        var instance: WikdgetArgs by singleAssign()
+    }
 }

@@ -14,6 +14,7 @@ dependencies {
     compile "no.tornado:tornadofx:1.7.16"
     compile 'com.sleepycat:je:5.0.73'
     compile files("lib/dkpro-jwktl.jar")
+    compile "com.xenomachina:kotlin-argparser:2.0.7"
 }
 
 compileKotlin {
