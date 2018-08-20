@@ -97,7 +97,7 @@ class SearchView: View("Wikdget: Search") {
                     // prevent clicking the search button
                     isDisable = true
 
-                    runAsyncWithProgress {
+                    runAsync {
                         controller.search()
                     } ui {
                         controller.results.setAll(it)
