@@ -17,17 +17,15 @@
 
 package tbsc.wikdget.ui
 
-import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener
 import javafx.geometry.Insets
 import javafx.geometry.Pos
+import javafx.scene.control.ListView
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
-import tbsc.wikdget.Log
-import tbsc.wikdget.beGone
-import tbsc.wikdget.resetAndGone
-import tbsc.wikdget.unGone
+import tbsc.wikdget.*
+import tbsc.wikdget.wikt.Database
 import tornadofx.*
 
 /**
@@ -37,7 +35,8 @@ class StartView: View("Wikdget: Start") {
 
     val langController: LanguageController by inject()
     val langModel: LanguageModel by inject()
-    val langSearchProperty = SimpleStringProperty("")
+    val langSearchProperty = "".prop()
+    var languageListView: ListView<String> by singleAssign()
 
     override val root = vbox {
         Log.i("Showing StartView")
@@ -61,7 +60,7 @@ class StartView: View("Wikdget: Start") {
         }
 
         // Shows available (and filtered) languages
-        listview(langController.languages) {
+        languageListView = listview(langController.languages) {
             // Fill vertically (main control in the view)
             vgrow = Priority.ALWAYS
             // Selected language will be updated to langModel
@@ -105,6 +104,17 @@ class StartView: View("Wikdget: Start") {
                     // Remove the error label so it doesn't show if user returns from search view
                     errorLabel.resetAndGone()
                     replaceWith<SearchView>()
+                }
+            }
+
+            runLater {
+                isDisable = true
+                text = "Loading..."
+                runAsync {
+                    Database.load()
+                } ui {
+                    text = "Confirm"
+                    isDisable = false
                 }
             }
         }
